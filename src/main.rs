@@ -1,4 +1,6 @@
 #[derive(Copy, Clone)]
+/// Building block for all shapes.
+/// Takes an X and Y coordinate to make a Point
 struct Point {
     x: f64,
     y: f64,
@@ -13,6 +15,7 @@ impl Point {
     }
 }
 
+/// Line from two Points
 struct Line {
     points: [Point; 2],
 }
@@ -36,6 +39,14 @@ impl Line {
         let old_point = self.points[0];
         self.points[0] = self.points[1];
         self.points[1] = old_point;
+    }
+    fn translate_x(self: &mut Self, amount: f64) {
+        self.points[0].x = self.points[0].x + amount;
+        self.points[1].x = self.points[1].x + amount;
+    }
+    fn translate_y(self: &mut Self, amount: f64) {
+        self.points[0].y = self.points[0].y + amount;
+        self.points[1].y = self.points[1].y + amount;
     }
 }
 
@@ -67,7 +78,7 @@ impl Quadrilateral{
 }
         
 fn main() {
-    let my_line = Line::new(
+    let mut my_line = Line::new(
             Point{x: 0.0, y: 1.0},
             Point{x: 3.0,y: 4.0}
         );
@@ -99,4 +110,13 @@ fn main() {
     let square_line = my_square.get_single_line(0);
     square_line.list_points();
     println!("Distance: {}", square_line.distance());
+
+    my_line.translate_x(5.0);
+    println!("My Line Translated:");
+    my_line.list_points();
+
+    println!("Negative values now");
+    my_line.translate_x(-10.0);
+    my_line.translate_y(-5.0);
+    my_line.list_points();
 }
