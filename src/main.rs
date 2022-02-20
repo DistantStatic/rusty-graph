@@ -13,6 +13,9 @@ impl Point {
             y,
         }
     }
+    fn print(self: &Self) -> String {
+        String::from(format!("({}, {})", self.x, self.y))
+    }
 }
 
 /// Line from two Points
@@ -44,20 +47,20 @@ impl Line {
         self.points[1] = old_point;
     }
     fn translate_x(self: &mut Self, amount: f64) {
-        self.points[0].x = self.points[0].x + amount;
-        self.points[1].x = self.points[1].x + amount;
+        self.points[0].x += amount;
+        self.points[1].x += amount;
     }
     fn translate_y(self: &mut Self, amount: f64) {
-        self.points[0].y = self.points[0].y + amount;
-        self.points[1].y = self.points[1].y + amount;
+        self.points[0].y += amount;
+        self.points[1].y += amount;
     }
     fn reflect_x(self: &mut Self) {
-        self.points[0].y = self.points[0].y * -1.0;
-        self.points[1].y = self.points[1].y * -1.0;
+        self.points[0].y *= -1.0;
+        self.points[1].y *= -1.0;
     }
     fn reflect_y(self: &mut Self) {
-        self.points[0].x = self.points[0].x * -1.0;
-        self.points[1].x = self.points[1].x * -1.0;
+        self.points[0].x *= -1.0;
+        self.points[1].x *= -1.0;
     }
     fn find_slope(self: &Self) -> f64{
         (self.points[1].y - self.points[0].y) / (self.points[1].x - self.points[0].x)
@@ -87,14 +90,18 @@ impl Triangle {
         }
     }
     fn reflect_x(self: &mut Self) {
-        for mut p in self.points {
-            p.y = p.y * -1.0;
+        for p in &mut self.points {
+            p.y *= -1.0;
         }
     }
     fn reflect_y(self: &mut Self) {
-        for mut p in self.points {
-            p.x = p.x * -1.0;
+        for p in &mut self.points {
+            p.x *= -1.0;
         }
+    }
+    fn list_points(self: &Self) {
+        println!("A: {}\nB: {}\nC: {}",
+        self.points[0].print(), self.points[1].print(), self.points[2].print());
     }
 }
 
@@ -176,4 +183,16 @@ fn main() {
     println!("Reflect on y axis");
     my_line.reflect_y();
     my_line.details();
+
+    let mut my_triangle = Triangle::new(
+        Point::new(0.0, 0.0),
+        Point::new(3.0, 0.0),
+        Point::new(0.0, 3.0),
+        );
+    my_triangle.list_points();
+    
+    println!("Reflect y");
+    my_triangle.reflect_y();
+    my_triangle.list_points();
+
 }
