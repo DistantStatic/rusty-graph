@@ -72,6 +72,32 @@ impl Line {
     }
 }
 
+struct Triangle{
+    points: [Point; 3],
+}
+
+impl Triangle {
+    fn new(p0: Point, p1: Point, p2: Point) -> Triangle {
+        Triangle {
+            points: [
+                p0,
+                p1,
+                p2,
+            ]
+        }
+    }
+    fn reflect_x(self: &mut Self) {
+        for mut p in self.points {
+            p.y = p.y * -1.0;
+        }
+    }
+    fn reflect_y(self: &mut Self) {
+        for mut p in self.points {
+            p.x = p.x * -1.0;
+        }
+    }
+}
+
 struct Quadrilateral{
     points: [Point; 4],
 }
