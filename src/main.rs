@@ -35,6 +35,9 @@ impl Line {
     fn distance(self: &Self) -> f64 {
         f64::sqrt(f64::powi(self.points[0].x - self.points[1].x, 2) + f64::powi(self.points[0].y - self.points[1].y, 2))
     }
+    fn list_distance(self: &Self) {
+        println!("Distance: {}", self.distance());
+    }
     fn flip(self: &mut Self) {
         let old_point = self.points[0];
         self.points[0] = self.points[1];
@@ -64,6 +67,7 @@ impl Line {
     }
     fn details(self: &Self) {
         self.list_points();
+        self.list_distance();
         self.list_slope();
     }
 }
