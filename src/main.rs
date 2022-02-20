@@ -56,6 +56,16 @@ impl Line {
         self.points[0].x = self.points[0].x * -1.0;
         self.points[1].x = self.points[1].x * -1.0;
     }
+    fn find_slope(self: &Self) -> f64{
+        (self.points[1].y - self.points[0].y) / (self.points[1].x - self.points[0].x)
+    }
+    fn list_slope(self: &Self) {
+        println!("Slope: {}", self.find_slope());
+    }
+    fn details(self: &Self) {
+        self.list_points();
+        self.list_slope();
+    }
 }
 
 struct Quadrilateral{
@@ -112,28 +122,28 @@ fn main() {
         );
 
     println!("My Line:");
-    my_line.list_points();
+    my_line.details();
     println!("Distance: {}", my_line.distance());
 
     println!("QuadrilateralLine:");
     let square_line = my_square.get_side_line(0);
-    square_line.list_points();
+    square_line.details();
     println!("Distance: {}", square_line.distance());
 
     my_line.translate_x(5.0);
     println!("My Line Translated:");
-    my_line.list_points();
+    my_line.details();
 
     println!("Negative values now");
     my_line.translate_x(-10.0);
     my_line.translate_y(-5.0);
-    my_line.list_points();
+    my_line.details();
 
     println!("Reflect on x axis");
     my_line.reflect_x();
-    my_line.list_points();
+    my_line.details();
 
     println!("Reflect on y axis");
     my_line.reflect_y();
-    my_line.list_points();
+    my_line.details();
 }
