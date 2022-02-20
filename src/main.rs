@@ -48,6 +48,14 @@ impl Line {
         self.points[0].y = self.points[0].y + amount;
         self.points[1].y = self.points[1].y + amount;
     }
+    fn reflect_x(self: &mut Self) {
+        self.points[0].y = self.points[0].y * -1.0;
+        self.points[1].y = self.points[1].y * -1.0;
+    }
+    fn reflect_y(self: &mut Self) {
+        self.points[0].x = self.points[0].x * -1.0;
+        self.points[1].x = self.points[1].x * -1.0;
+    }
 }
 
 struct Quadrilateral{
@@ -60,7 +68,7 @@ impl Quadrilateral{
             points: [ p0, p1, p2, p3 ],
         }
     }
-    fn get_single_line(self: &Self, side: usize) -> Line {
+    fn get_side_line(self: &Self, side: usize) -> Line {
         let start = side % 4;
         let end = (start + 1) % 4;
 
@@ -75,6 +83,7 @@ impl Quadrilateral{
             }
         )
     }
+
 }
         
 fn main() {
@@ -107,7 +116,7 @@ fn main() {
     println!("Distance: {}", my_line.distance());
 
     println!("QuadrilateralLine:");
-    let square_line = my_square.get_single_line(0);
+    let square_line = my_square.get_side_line(0);
     square_line.list_points();
     println!("Distance: {}", square_line.distance());
 
@@ -118,5 +127,13 @@ fn main() {
     println!("Negative values now");
     my_line.translate_x(-10.0);
     my_line.translate_y(-5.0);
+    my_line.list_points();
+
+    println!("Reflect on x axis");
+    my_line.reflect_x();
+    my_line.list_points();
+
+    println!("Reflect on y axis");
+    my_line.reflect_y();
     my_line.list_points();
 }
