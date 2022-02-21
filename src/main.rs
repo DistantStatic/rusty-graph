@@ -135,27 +135,15 @@ impl Quadrilateral{
         
 fn main() {
     let mut my_line = Line::new(
-            Point{x: 0.0, y: 1.0},
-            Point{x: 3.0,y: 4.0}
+            Point::new(0.0, 1.0),
+            Point::new(3.0, 4.0)
         );
 
     let my_square = Quadrilateral::new(
-            Point {
-                x: 0.0,
-                y: 5.0,
-            },
-            Point {
-                x: 5.0,
-                y: 5.0,
-            },
-            Point {
-                x: 5.0,
-                y: 0.0,
-            },
-            Point {
-                x: 0.0,
-                y: 0.0,
-            }
+            Point::new(0.0, 5.0),
+            Point::new(5.0, 5.0),
+            Point::new(5.0, 0.0),
+            Point::new(0.0, 0.0)
         );
 
     println!("My Line:");
@@ -195,4 +183,7 @@ fn main() {
     my_triangle.reflect_y();
     my_triangle.list_points();
 
+    println!("Reflect x");
+    my_triangle.reflect_x();
+    my_triangle.list_points();
 }
