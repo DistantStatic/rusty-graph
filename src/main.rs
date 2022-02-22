@@ -18,6 +18,13 @@ impl Point {
     }
 }
 
+#[derive(PartialEq)]
+enum Direction {
+    Clockwise,
+    Counterwise,
+    Collinear
+}
+
 /// Line from two Points
 struct Line {
     points: [Point; 2],
@@ -67,6 +74,22 @@ impl Line {
     }
     fn list_slope(self: &Self) {
         println!("Slope: {}", self.find_slope());
+    }
+    fn intersect(self: &Self, other: Line) -> bool {
+        //determine orientation
+        let dir_one = get_points_direction(self.points[0], self.points[1], other.points[0]);
+        let dir_two = get_points_direction(self.points[0], self.points[1], other.points[1]);
+        let dir_three = get_points_direction(other.points[0], other.points[1], self.points[0]);
+        let dir_four = get_points_direction(other.points[0], other.points[1], self.points[1]);
+
+        //match based on orientation cases
+        if dir_one != dir_two && dir_three != dir_four { return true;}
+        
+        //check if overlapping
+
+        //if all check fail, return false
+        return false;
+
     }
     fn details(self: &Self) {
         self.list_points();
@@ -132,6 +155,17 @@ impl Quadrilateral{
     }
 
 }
+
+fn get_points_direction(pa: Point, pb: Point, pc: Point) -> Direction {
+    let direc = ((pb.y - pa.y) * (pc.x - pb.x)) - ((pb.x - pa.x) * (pc.y -pb.y));
+    if direc > 0.0 {
+        return Direction::Clockwise;
+    } 
+    if direc < 0.0 {
+        return Direction::Counterwise;
+    }
+    return Direction::Collinear;
+}
         
 fn main() {
     let mut my_line = Line::new(
@@ -186,4 +220,26 @@ fn main() {
     println!("Reflect x");
     my_triangle.reflect_x();
     my_triangle.list_points();
+
+    let other_line = Line::new(
+        Point::new(0.0, 4.0),
+        Point::new(3.0, 1.0)
+        );
+    
+    if my_line.intersect(other_line) {
+        println!("Intersects!");
+    } else {
+        println!("Does not intersect");
+    }
+
+    let new_line = Line::new(
+        Point::new(0.0, 2.0),
+        Point::new(3.0, 5.0)
+        );
+    
+    if my_line.intersect(new_line) {
+        println!("Intersects!");
+    } else {
+        println!("Does not intersect");
+    }
 }
